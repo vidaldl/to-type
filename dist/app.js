@@ -13,13 +13,13 @@ function addTask(description) {
     };
     tasks.push(newTask);
     console.log("Task added:", newTask);
-    renderTaskList();
+    renderTaskList(); // Re-render after adding task
 }
 // Takes the task's id as input.
 function removeTask(id) {
     // Filters the tasks array
     tasks = tasks.filter(task => task.id !== id);
-    renderTaskList();
+    renderTaskList(); // Re-render after removing task
     console.log("Task removed with ID:", id);
 }
 // Takes the task's id and an updated Task object as input.
@@ -29,6 +29,7 @@ function updateTask(id, updatedTask) {
     // Replace the task at that index
     if (index !== -1) {
         tasks[index] = updatedTask;
+        renderTaskList(); // Re-render after updating task
         console.log("Task updated:", updatedTask);
     }
 }
@@ -54,26 +55,38 @@ addTaskButton.addEventListener("click", () => {
 function renderTask(task) {
     const li = document.createElement("li");
     li.classList.add("list-group-item");
+    // Wrap elements in a div
+    const taskContent = document.createElement("div");
+    taskContent.classList.add("d-flex", "align-items-center");
+    // Render Checkbox
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = task.completed;
-    checkbox.addEventListener("change", () => toggleComplete(task.id));
-    const descriptionSpan = document.createElement("span");
-    descriptionSpan.classList.add("mx-3");
-    descriptionSpan.textContent = task.description;
-    descriptionSpan.addEventListener("click", () => toggleComplete(task.id));
-    if (task.completed) {
-        descriptionSpan.classList.add("completed");
-    }
+    checkbox.addEventListener("change", () => toggleComplete(task.id)); // add action on trigger
+    // Render Description with Edit
+    const descriptionInput = document.createElement("input");
+    descriptionInput.type = "text";
+    descriptionInput.classList.add("form-control", "form-control-sm");
+    descriptionInput.value = task.description;
+    descriptionInput.addEventListener("blur", () => {
+        const newDescription = descriptionInput.value.trim();
+        if (newDescription && newDescription !== task.description) {
+            updateTask(task.id, Object.assign(Object.assign({}, task), { description: newDescription }));
+        }
+    });
+    // Render Delete Button
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
     deleteButton.classList.add("btn", "btn-danger", "btn-sm", "float-end");
-    deleteButton.addEventListener("click", () => removeTask(task.id));
-    li.appendChild(checkbox);
-    li.appendChild(descriptionSpan);
-    li.appendChild(deleteButton);
+    deleteButton.addEventListener("click", () => removeTask(task.id)); // add action on trigger
+    // Append all elemtns to task wrapper
+    taskContent.appendChild(checkbox);
+    taskContent.appendChild(descriptionInput);
+    taskContent.appendChild(deleteButton);
+    li.appendChild(taskContent);
     return li;
 }
+// Clear and render task list
 function renderTaskList() {
     taskList.innerHTML = ""; // Clear the current list
     for (const task of tasks) {
