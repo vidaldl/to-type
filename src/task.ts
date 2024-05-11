@@ -7,4 +7,3 @@ interface Task {
     dueDate?: Date;  // Optional 
 }
 
-export { Task };

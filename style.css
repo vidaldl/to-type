@@ -1,0 +1,50 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Clean sans-serif font */
+    color: #333; /* Dark gray text */
+}
+
+.container {
+    max-width: 800px; /* Limit container width for a more focused feel */
+}
+
+h1 {
+    font-weight: 600; /* Slightly bolder heading */
+    margin-bottom: 30px;
+}
+
+/* Input and Button Styles */
+#input-container {
+    background-color: #fff; /* White background for input area */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+#new-task-input {
+    border: none;
+    border-bottom: 1px solid #ccc; /* Simple underline for input */
+    padding: 10px 0;
+}
+
+#add-task-button {
+    background-color: #007bff; /* Bootstrap primary color */
+    border: none;
+}
+
+/* Task List Styles */
+.list-group-item {
+    background-color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee; /* Subtle dividers between tasks */
+}
+
+.list-group-item:last-child {
+    border-bottom: none; /* Remove bottom border from the last task */
+}
+
+.list-group-item.completed {
+    text-decoration: line-through; /* Strike through completed tasks */
+    color: #888; /* Lighter text color for completed tasks */
+}
